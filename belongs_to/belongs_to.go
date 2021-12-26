@@ -1,4 +1,4 @@
-package belongs_to
+package main
 
 import (
 	db2 "go_gorm/db"
