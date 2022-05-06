@@ -1,9 +1,11 @@
 package main
+
 //hasone
 import (
 	db2 "go_gorm/db"
 	"gorm.io/gorm"
 )
+
 /**
 CREATE TABLE `dogs` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -19,6 +21,7 @@ CREATE TABLE `gril_gods` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
  */
+
 type Dog struct {
 	ID   uint `gorm:"primarykey"`
 	Name string
@@ -49,31 +52,33 @@ func one2one(db *gorm.DB){
 	d := Dog{
 		ID :1,
 	}
-	d2 := Dog{
-		ID :2,
-	}
+	//d2 := Dog{
+	//	ID :2,
+	//}
 	g := GrilGod{
-		ID: 3,
+		ID: 1,
 	}
 
 	//给女神推送舔狗:创建女神模型建立跟舔狗的关系追加指定舔狗关系
 	db.Model(&g).Association("Dog").Append(&d)
-	db.Model(&g).Association("Dog").Delete(&d)
-	//替换关联关系
-	db.Model(&g).Association("Dog").Replace(&d,&d2)
-	//清除所有关联关系
-	db.Model(&g).Association("Dog").Clear()
+	//db.Model(&g).Association("Dog").Delete(&d)
+	////替换关联关系
+	//db.Model(&g).Association("Dog").Replace(&d,&d2)
+	////清除所有关联关系
+	//db.Model(&g).Association("Dog").Clear()
 
 }
 
 func main()  {
+
 	db,err:= db2.Initdb()
 	if err != nil {
 		panic(err)
 	}
 
 	db.AutoMigrate(&GrilGod{},&Dog{})
-	hasOne(db)
+
+	//hasOne(db)
 
 	//1.查询单个女神数据
 	//var girl GrilGod
@@ -83,5 +88,5 @@ func main()  {
 	//db.Preload("Dog").First(&girl,1)
 	//fmt.Println(girl)
 
-	//one2one(db)
+	one2one(db)
 }

@@ -50,8 +50,8 @@ func main()  {
 	if err != nil {
 		panic(err)
 	}
-	//db.AutoMigrate(&GirlGod{},&Dog{})
-	//db.AutoMigrate(&Info{})
+	db.AutoMigrate(&GirlGod{},&Dog{})
+	db.AutoMigrate(&Info{})
 
 	//创建
 	//onetomany(db)
@@ -61,7 +61,7 @@ func main()  {
 	//db.First(&girl)
 
 	//查询女神的指定舔狗
-	//db.Preload("Dogs","name = ?","dog2").First(&girl)
+	//db.Preload("Dogs.Info").Preload("Dogs","name = ?","dog2").First(&girl)
 
 	//自定义sql where
 	//db.Preload("Dogs", func(db *gorm.DB) *gorm.DB{
@@ -74,7 +74,7 @@ func main()  {
 
 	// Join 加载
 	db.Preload("Dogs", func(db *gorm.DB) *gorm.DB {
-		return db.Joins("Info").Where("money > ?",2000)
+		return db.Joins("Info").Where("money > ?","1000")
 	}).First(&girl)
 
 	fmt.Println(girl)

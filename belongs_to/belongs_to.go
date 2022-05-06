@@ -4,6 +4,7 @@ import (
 	db2 "go_gorm/db"
 	"gorm.io/gorm"
 )
+
 /**
 CREATE TABLE `dogs` (
   `name` varchar(256) DEFAULT NULL,
@@ -20,6 +21,7 @@ CREATE TABLE `gril_gods` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 */
+
 type Dog struct {
 	Name string
 	ID   uint `gorm:"primarykey"`
@@ -58,9 +60,9 @@ func one2noe(db *gorm.DB)  {
 	//	ID: 2,
 	//}
 	//创建一个舔狗模型去舔女神
-	db.Model(&d).Association("GrilGod").Append(&g)
+	//db.Model(&d).Association("GrilGod").Append(&g)
 	//清除某个女神关联关系
-	//db.Model(&d).Association("GrilGod").Delete(&g)
+	db.Model(&d).Association("GrilGod").Delete(&g)
 	//替换关联关系
 	//db.Model(&d).Association("GrilGod").Replace(&g,&g2)
 	//清除所有关联关系
@@ -68,19 +70,23 @@ func one2noe(db *gorm.DB)  {
 }
 
 func main()  {
+
 	db,err:= db2.Initdb()
 	if err != nil {
 		panic(err)
 	}
-	m := db.Migrator()
+	db.AutoMigrate(&Dog{})
+
 	//判断是否存在表
-	if table := m.HasTable(&Dog{});table == false {
-		db.AutoMigrate(&Dog{})
-	}
+	//if table := m.HasTable(&Dog{});table == false {
+	//	db.AutoMigrate(&Dog{})
+	//}
+
 	//belongsTo(db)
 	//1.查询单个舔狗数据
 	//var god Dog
-	//db.First(&Dog,1)
+
+	//db.First(&god,1)
 	//1.查询单个舔狗并且把女神查出来
 	//db.Preload("GrilGod").First(&god,1)
 	//fmt.Println(god)

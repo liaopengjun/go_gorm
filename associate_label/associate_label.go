@@ -26,6 +26,6 @@ func main()  {
 
 	db.AutoMigrate(&Jiazi{},&Yujie{},&Xiaofengche{})
 
-	db.Create(&Jiazi{Name: "夹子",Xiaofengche:Xiaofengche{Name: "小风车"},})
-	db.Create(&Yujie{Name: "御姐",Xiaofengche:Xiaofengche{Name: "大风车"},})
+	db.Create(&Jiazi{Name: "夹子",Xiaofengche:Xiaofengche{Name: "小风车"}})
+	db.Create(&Yujie{Name: "御姐",Xiaofengche:Xiaofengche{Name: "大风车"}})
 }
